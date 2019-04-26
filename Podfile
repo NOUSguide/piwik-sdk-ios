@@ -1,24 +1,39 @@
-inhibit_all_warnings!
+source 'https://github.com/CocoaPods/Specs.git'
 
+abstract_target :example do
+  use_frameworks!
+  inhibit_all_warnings!
+  project 'MatomoTracker'
+  workspace 'MatomoTracker'
 
-platform :ios, '6.0'
-link_with ['PiwikTracker', 'PiwikTrackeriOSDemo']
-  
-podspec :name => 'PiwikTracker'
-  
+  target :ios do
+    platform :ios, '8.0'
+    project 'Example/ios/ios'
+    pod 'MatomoTracker', path: './'
+  end
 
+  target :macos do
+    platform :osx, '10.12'
+    project 'Example/macos/macos'
+    pod 'MatomoTracker', path: './'
+  end
 
-target :osx, :exclusive => true do
-
-  platform :osx, '10.8'
-  link_with ['PiwikTrackerOSXDemo']
-  
-  podspec :name => 'PiwikTracker'
+  target :tvos do
+    platform :tvos, '10.2'
+    project 'Example/tvos/tvos'
+    pod 'MatomoTracker', path: './'
+  end
 
 end
 
-
-
-
-
-
+target 'MatomoTrackerTests' do
+  use_frameworks!
+  platform :ios, '8.0'
+  inhibit_all_warnings!
+  project 'MatomoTracker'
+  workspace 'MatomoTracker'
+  inherit! :search_paths
+  
+  pod 'Quick', '~> 1.2'
+  pod 'Nimble', '~> 7.0'
+end
